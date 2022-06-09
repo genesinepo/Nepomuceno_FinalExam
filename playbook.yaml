@@ -1,0 +1,10 @@
+---
+- name: install packages in ubuntu
+  hosts: 192.168.56.101
+  vars_files:
+    - ./config.yaml
+  roles:
+    - ubuntu_es
+    - ubuntu_git
+    - ubuntu_mt
+    - ubuntu_motd
