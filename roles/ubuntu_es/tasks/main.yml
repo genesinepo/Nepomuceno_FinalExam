@@ -1,0 +1,46 @@
+---
+# tasks file for roles/ubuntu-es
+- name: install vsftpd ubuntu
+  apt:
+    name: vsftpd
+    state: latest
+    update_cache: yes
+
+- name: disable firewall
+  service:
+    name: ufw
+    state: stopped
+    enabled: no
+
+- name: create ftp user
+  user:
+    name: genesinepo123
+    password: genesinepo123
+    comment: "FTP user successfully created"
+
+- name: create ftp dir
+  file:
+    path: /home/genesinepo123/ftp
+    state: directory
+    owner: genesinepo123
+    group: genesinepo123
+    mode: '0555'
+
+- name: create ftp files
+  file:
+    path: /home/genesinepo123/ftp/files
+    state: directory
+    owner: genesinepo123
+    group: genesinepo123
+    
+- name: copy vsftpd.config
+  copy:
+    src: vsftpd.conf
+    dest: /etc/vsftpd.conf
+  register: vsftpd_config
+
+- name: restart vsftpd.config
+  service:
+    name: vsftpd
+    state: restarted
+  when: vsftpd_config.changed

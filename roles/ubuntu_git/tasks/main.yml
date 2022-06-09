@@ -1,0 +1,14 @@
+---
+# tasks file for roles/ubuntu-git
+- name: create directory
+  file:
+    path: /home/genesinepo/repo
+    state: directory
+    mode: '777'
+
+- name: clone prelim repo
+  git:
+    repo: 'https://github.com/genesinepo/Nepomuceno_PrelimExam.git'
+    dest: /home/genesinepo/repo
+    clone: yes
+    update: yes
